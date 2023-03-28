@@ -6,7 +6,7 @@ import { TaskService } from './../shared/services/task.service';
 @Component({
   selector: 'app-toodu',
   templateUrl: './toodu.component.html',
-  styleUrls: ['./toodu.component.css', './toodu.componentTask.css'],
+  styleUrls: ['./toodu.component.css', './toodu.componentTask.css', './toodu.componentLight.css'],
 })
 export class TooduComponent implements OnInit {
   saveBttActive = false;
@@ -21,11 +21,38 @@ export class TooduComponent implements OnInit {
 
   tasks: Task[] = [];
   selectedTask: Task | null = null;
-  
+  isDarkMode = true;
+
   constructor(private fb: FormBuilder, private taskService: TaskService) { }
-  
+
   ngOnInit(): void {
     this.fetchTasks();
+
+    const switchEl = document.querySelector('.switch input') as HTMLInputElement;;
+
+    if (localStorage.getItem("checked") == 'true') {
+      switchEl.checked = true;
+      this.isDarkMode = false;
+    }
+    if (localStorage.getItem("checked") == 'false') {
+      switchEl.checked = false;
+      this.isDarkMode = true;
+    }
+  }
+
+  toggleMode() {
+    const switchEl = document.querySelector('.switch input') as HTMLInputElement;;
+
+    if (switchEl.checked) {
+      this.isDarkMode = false;
+      localStorage.setItem("checked", "true");
+      localStorage.setItem("isDarkMode", this.isDarkMode.toString());
+    }
+    else {
+      this.isDarkMode = true;
+      localStorage.setItem("checked", "false");
+      localStorage.setItem("isDarkMode", this.isDarkMode.toString());
+    }
   }
 
   fetchTasks(): void {
@@ -58,7 +85,7 @@ export class TooduComponent implements OnInit {
       console.log('Task updated successfully');
     });
   }
-  
+
 
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task.id).subscribe(

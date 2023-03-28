@@ -62,6 +62,7 @@ body {
   box-shadow: 0px 0px 40px 0px #00000085;
   gap: 25px;
   display: grid;
+  min-height: 90px;
 }
 
 

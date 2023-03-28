@@ -21,12 +21,6 @@ export class TaskService {
     return this.http.post<Task>(this.baseUrl, task);
   }
 
-  // updateTask(task: Task): Observable<Task> {
-  //   const url = `${this.baseUrl}/${task.id}`;
-  //   return this.http.put<Task>(url, task);
-  // }
-
-
   updateTask(task: Task): Observable<Task> {
     const url = `${this.baseUrl}/${task.id}`;
     return this.http.put<Task>(url, task);
